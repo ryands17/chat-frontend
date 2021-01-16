@@ -50,9 +50,14 @@
   },
   "devDependencies": {
     "@craco/craco": "^6.0.0",
+    "@types/autoprefixer": "^9.7.2",
+    "@types/prettier": "^2.1.6",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/testing-library__jest-dom": "^5.9.5",
     "husky": ">=4",
     "lint-staged": ">=10",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "typesync": "^0.8.0"
   },
   "prettier": {
     "semi": false,
