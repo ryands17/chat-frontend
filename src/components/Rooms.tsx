@@ -31,9 +31,9 @@ export const Rooms = () => {
           name: newRoom,
         },
       }) as Promise<GraphQLResult>)
-      history.push(`/chat/${room.data.createRoom.id}`, {
-        name: room.data.createRoom.id,
-      })
+      history.push(
+        `/chat/${room.data.createRoom.id}/${room.data.createRoom.name}`
+      )
     } catch (err) {
       console.log('error creating room: ', err)
     }
@@ -64,14 +64,14 @@ export const Rooms = () => {
         </button>
       </div>
 
-      <h2 className="text-3xl text-green-600">Available rooms</h2>
+      <h2 className="text-3xl text-green-400">Available rooms</h2>
       <ul>
         {rooms?.map(room => (
           <li
-            className="py-4 px-2 text-2xl cursor-pointer text-blue-600"
+            className="py-4 px-2 text-2xl cursor-pointer text-blue-400 w-1/3"
             key={room.id}
             onClick={() => {
-              history.push(`/chat/${room.id}`, { name: room.name })
+              history.push(`/chat/${room.id}/${room.name}`)
             }}
           >
             {room.name}

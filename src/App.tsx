@@ -51,7 +51,7 @@ const Routes: React.FC = ({ children }) => {
       {children}
       <Switch>
         <Route exact path="/" component={Rooms} />
-        <Route path="/chat/:id" component={Chat} />
+        <Route path="/chat/:id/:name" component={Chat} />
       </Switch>
     </BrowserRouter>
   )

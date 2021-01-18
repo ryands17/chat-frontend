@@ -1,4 +1,5 @@
 import { Auth } from 'aws-amplify'
+import { Link } from 'react-router-dom'
 
 export const Nav = ({ user }: { user: any }) => {
   const signout = async () => {
@@ -10,7 +11,7 @@ export const Nav = ({ user }: { user: any }) => {
       <div className="container mx-auto flex flex-wrap items-center">
         <div className="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
           <span className="text-2xl pl-2">
-            <i className="em em-grinning" /> Chat Room:{' '}
+            <i className="em em-grinning" /> <Link to="/">Chat Room</Link>:{' '}
             {user && <span>{user.username}</span>}
           </span>
         </div>
@@ -19,7 +20,7 @@ export const Nav = ({ user }: { user: any }) => {
             {user && (
               <li className="mr-3">
                 <button
-                  className="bg-green-600 px-2 text-white rounded-sm"
+                  className="bg-green-400 px-2 text-white rounded-sm"
                   onClick={signout}
                 >
                   Sign Out
