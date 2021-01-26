@@ -35,6 +35,7 @@ export const onCreateMessageByRoomId = /* GraphQL */ `
     }
   }
 `
+
 export const onCreateRoom = /* GraphQL */ `
   subscription OnCreateRoom {
     onCreateRoom {
@@ -58,6 +59,18 @@ export const createRoom = /* GraphQL */ `
 export const createMessage = /* GraphQL */ `
   mutation CreateMessage($input: MessageInput!) {
     createMessage(input: $input) {
+      id
+      content
+      owner
+      createdAt
+      roomId
+    }
+  }
+`
+
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage($id: ID!) {
+    deleteMessage(id: $id) {
       id
       content
       owner

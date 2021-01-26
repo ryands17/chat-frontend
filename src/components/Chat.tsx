@@ -7,6 +7,7 @@ import {
   createMessage,
   listMessagesForRoom,
   onCreateMessageByRoomId,
+  deleteMessage,
 } from '../queries'
 
 const scrollToRefWithAnimation = (ref: React.MutableRefObject<any>) => {
@@ -61,13 +62,29 @@ export const Chat = () => {
         const {
           value: { data },
         } = subscriptionData
-        setChats(chats => [...chats, data.onCreateMessageByRoomId])
+
+        let chat = data.onCreateMessageByRoomId
+        let chatExists = chats.findIndex(current => current.id === chat.id)
+
+        if (chatExists === -1) {
+          setChats(chats => [...chats, chat])
+        } else {
+          let newChats = [...chats]
+          newChats.splice(chatExists, 1)
+          setChats(newChats)
+        }
         scrollToLatest()
       },
     })
 
-    console.log(subscription)
+    setUserState()
 
+    return () => {
+      subscription && subscription.unsubscribe()
+    }
+  }, [params, chats])
+
+  React.useEffect(() => {
     const listMessages = async () => {
       try {
         const chats: any = await (API.graphql({
@@ -83,11 +100,17 @@ export const Chat = () => {
         console.log('listMessages:', err)
       }
     }
-    setUserState()
     listMessages()
-
-    return () => subscription && subscription.unsubscribe()
   }, [params])
+
+  const deleteChat = async (chatId: string) => {
+    await API.graphql({
+      query: deleteMessage,
+      variables: {
+        id: chatId,
+      },
+    })
+  }
 
   return (
     <div className="mt-14">
@@ -108,7 +131,17 @@ export const Chat = () => {
                       : 'bg-gray-300'
                   }`}
                 >
-                  {chat.content}
+                  <div className="flex justify-between">
+                    <div>{chat.content}</div>
+                    {chat.owner === user.username && (
+                      <button
+                        className="bg-red-500"
+                        onClick={() => deleteChat(chat.id)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             )
